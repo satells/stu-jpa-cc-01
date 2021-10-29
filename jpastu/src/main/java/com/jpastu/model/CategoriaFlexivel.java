@@ -37,4 +37,10 @@ public class CategoriaFlexivel {
 
 	public CategoriaFlexivel() {
 	}
+
+	@Override
+	public String toString() {
+		return "CategoriaFlexivel [id=" + id + ", descricao=" + descricao + "]";
+	}
+
 }

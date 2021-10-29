@@ -1,11 +1,11 @@
 package com.jpastu.commandline;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.jpastu.model.CategoriaFlexivel;
 import com.jpastu.model.Produto;
 import com.jpastu.repository.CategoriaRepository;
 import com.jpastu.repository.ProdutoReposiroty;
@@ -23,19 +23,25 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String nome = "SAMSUNG A5";
-		String descricao = "CELULAR";
-		BigDecimal preco = new BigDecimal("800.11");
 
-		CategoriaFlexivel categoria = new CategoriaFlexivel("generica");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		List<Produto> produtos = produtoReposiroty.buscarTodos();
 
-		CategoriaFlexivel celulares = categoriaRepository.findByDescricao("celulares");
+		produtos.forEach(p -> System.out.println(p));
 
-//		Produto celular = new Produto(nome, descricao, preco, categoria);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		produtos = produtoReposiroty.buscarPorNome("A");
 
-//		produtoReposiroty.save(celular);
-		Produto produto = produtoReposiroty.findById((long) 2).get();
+		produtos.forEach(p -> System.out.println(p));
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		produtos = produtoReposiroty.buscarPorNomeDaCategoria("eletronicos");
 
-		produtoReposiroty.delete(produto);
+		produtos.forEach(p -> System.out.println(p));
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		BigDecimal preco = produtoReposiroty.buscaPrecoProdutoComNome("xyz");
+
+		System.out.println(String.format("<<<<<< Preco do produto: %f >>>>>>>>", preco.doubleValue()));
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+
 	}
 }
