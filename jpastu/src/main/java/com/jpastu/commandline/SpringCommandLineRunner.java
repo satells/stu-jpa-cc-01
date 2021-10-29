@@ -1,4 +1,4 @@
-package com.jpastu;
+package com.jpastu.commandline;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
