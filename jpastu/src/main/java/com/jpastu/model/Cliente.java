@@ -24,6 +24,11 @@ public class Cliente {
 
 	}
 
+	public Cliente(String nome, String cpf) {
+		this.nome = nome;
+		this.cpf = cpf;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -50,7 +55,7 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", pedidos=" + pedidos + "]";
+		return "Cliente [id=" + id + ", nome=" + nome + ", cpf=" + cpf + "]";
 	}
 
 	public List<Pedido> getPedidos() {

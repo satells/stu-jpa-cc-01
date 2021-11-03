@@ -6,6 +6,6 @@ import com.jpastu.model.CategoriaFlexivel;
 
 public interface CategoriaRepository extends JpaRepository<CategoriaFlexivel, Long> {
 
-	CategoriaFlexivel findByDescricao(String string);
+	CategoriaFlexivel findByDescricao(String descricao);
 
 }

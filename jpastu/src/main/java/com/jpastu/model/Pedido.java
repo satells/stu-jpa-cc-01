@@ -5,12 +5,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.apache.commons.lang3.StringUtils;
 
 @Entity
 public class Pedido {
@@ -24,7 +27,7 @@ public class Pedido {
 	@ManyToOne
 	private Cliente cliente;
 
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<PedidoItem> itens = new ArrayList<PedidoItem>();
 
 	public Pedido() {
@@ -39,11 +42,6 @@ public class Pedido {
 	public Pedido(Cliente cliente) {
 		super();
 		this.cliente = cliente;
-	}
-
-	@Override
-	public String toString() {
-		return "Pedido [id=" + id + ", data=" + data + ", cliente=" + cliente + ", valorTotal=" + valorTotal + "]";
 	}
 
 	public Long getId() {
@@ -76,6 +74,12 @@ public class Pedido {
 
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	@Override
+	public String toString() {
+		return "Pedido [id=" + id + ", data=" + data + ", valorTotal=" + valorTotal + ", cliente=" + cliente + ", itens="
+				+ StringUtils.join(itens, "|") + "]";
 	}
 
 }

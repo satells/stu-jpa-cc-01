@@ -20,7 +20,7 @@ public interface ProdutoReposiroty extends JpaRepository<Produto, Long> {
 	@Query("select p from Produto p where p.categoria.descricao = :categoria")
 	List<Produto> buscarPorNomeDaCategoria(@Param("categoria") String categoria);
 
-	@Query("select p.preco from Produto p where p.nome = :nome")
+	@Query("select p.preco from Produto p where p.nome like %:nome%")
 	BigDecimal buscaPrecoProdutoComNome(@Param("nome") String nome);
 
 }

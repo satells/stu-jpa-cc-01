@@ -24,6 +24,7 @@ public class PedidoItem {
 	private Produto produto;
 
 	public PedidoItem() {
+
 	}
 
 	public PedidoItem(Integer quantidade, Pedido pedido, Produto produto) {
@@ -70,6 +71,12 @@ public class PedidoItem {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	@Override
+	public String toString() {
+		return "PedidoItem [id=" + id + ", precoUnitario=" + precoUnitario + ", quantidade=" + quantidade + ", pedido=" + pedido + ", produto="
+				+ produto + "]";
 	}
 
 }
