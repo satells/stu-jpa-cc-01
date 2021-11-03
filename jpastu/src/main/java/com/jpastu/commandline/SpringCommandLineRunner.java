@@ -40,7 +40,7 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		BigDecimal preco = produtoReposiroty.buscaPrecoProdutoComNome("xyz");
 
-		System.out.println(String.format("<<<<<< Preco do produto: %f >>>>>>>>", preco.doubleValue()));
+		System.out.println(String.format("<<<<<< Preco do produto: %f >>>>>>>>", preco == null ? 0 : preco.doubleValue()));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 	}

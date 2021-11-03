@@ -2,12 +2,15 @@ package com.jpastu.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Pedido {
@@ -16,11 +19,21 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDate data = LocalDate.now();
-	@ManyToOne
-	private Cliente cliente;
 	private BigDecimal valorTotal;
 
+	@ManyToOne
+	private Cliente cliente;
+
+	@OneToMany(mappedBy = "pedido")
+	private List<PedidoItem> itens = new ArrayList<PedidoItem>();
+
 	public Pedido() {
+	}
+
+	public void adicionarItem(PedidoItem item) {
+		item.setPedido(this);
+		this.itens.add(item);
+
 	}
 
 	public Pedido(Cliente cliente) {

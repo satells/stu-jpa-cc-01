@@ -1,5 +1,8 @@
 package com.jpastu.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,10 +17,11 @@ public class Cliente {
 	private Long id;
 	private String nome;
 	private String cpf;
-	@OneToMany
-	private Pedido pedidos;
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 
 	public Cliente() {
+
 	}
 
 	public Long getId() {
@@ -44,17 +48,16 @@ public class Cliente {
 		this.cpf = cpf;
 	}
 
-	public Pedido getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(Pedido pedidos) {
-		this.pedidos = pedidos;
-	}
-
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", pedidos=" + pedidos + "]";
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 }
