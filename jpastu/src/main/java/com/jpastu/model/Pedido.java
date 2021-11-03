@@ -39,7 +39,10 @@ public class Pedido {
 
 		valorTotal = BigDecimal.ZERO;
 		for (PedidoItem i : itens) {
-			valorTotal = valorTotal.add(i.getPrecoUnitario().multiply(new BigDecimal(i.getQuantidade())));
+			System.out.println(i.getProduto().getPreco());
+			System.out.println(i.getQuantidade());
+
+			valorTotal = valorTotal.add(i.getProduto().getPreco().multiply(new BigDecimal(i.getQuantidade())));
 		}
 
 	}
