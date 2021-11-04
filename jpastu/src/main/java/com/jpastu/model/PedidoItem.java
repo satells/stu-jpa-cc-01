@@ -27,10 +27,10 @@ public class PedidoItem {
 
 	}
 
-	public PedidoItem(Integer quantidade, Pedido pedido, Produto produto) {
+	public PedidoItem(Integer quantidade, Produto produto) {
 		this.quantidade = quantidade;
-		this.pedido = pedido;
 		this.produto = produto;
+		this.precoUnitario = produto.getPreco();
 	}
 
 	public Long getId() {
@@ -75,8 +75,12 @@ public class PedidoItem {
 
 	@Override
 	public String toString() {
-		return "PedidoItem [id=" + id + ", precoUnitario=" + precoUnitario + ", quantidade=" + quantidade + ", pedido=" + pedido + ", produto="
-				+ produto + "]";
+		return "PedidoItem [id=" + id + ", precoUnitario=" + precoUnitario + ", quantidade=" + quantidade + ", produto=" + produto + "]";
+	}
+
+	public BigDecimal getValor() {
+
+		return this.precoUnitario.multiply(new BigDecimal(this.getQuantidade()));
 	}
 
 }

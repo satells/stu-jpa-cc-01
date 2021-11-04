@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.apache.commons.lang3.StringUtils;
-
 @Entity
 public class Pedido {
 
@@ -35,16 +33,8 @@ public class Pedido {
 
 	public void adicionarItem(PedidoItem item) {
 		item.setPedido(this);
+		this.valorTotal = this.valorTotal.add(item.getValor());
 		this.itens.add(item);
-
-		valorTotal = BigDecimal.ZERO;
-		for (PedidoItem i : itens) {
-			System.out.println(i.getProduto().getPreco());
-			System.out.println(i.getQuantidade());
-
-			valorTotal = valorTotal.add(i.getProduto().getPreco().multiply(new BigDecimal(i.getQuantidade())));
-		}
-
 	}
 
 	public Pedido(Cliente cliente) {
@@ -86,8 +76,7 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id + ", data=" + data + ", valorTotal=" + valorTotal + ", cliente=" + cliente + ", itens="
-				+ StringUtils.join(itens, "|") + "]";
+		return "Pedido [id=" + id + ", data=" + data + ", valorTotal=" + valorTotal + ", cliente=" + cliente;
 	}
 
 }
