@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jpastu.model.CategoriaFlexivel;
 import com.jpastu.model.Cliente;
@@ -15,12 +16,14 @@ import com.jpastu.repository.CategoriaRepository;
 import com.jpastu.repository.ClienteRepository;
 import com.jpastu.repository.PedidoRepository;
 import com.jpastu.repository.ProdutoReposiroty;
+import com.jpastu.vo.RelatorioDeVendasVo;
 
 /*select * from 
 	(((pedido p inner join cliente c on c.id = p.cliente_id) inner join pedidoitem pi on p.id = pi.pedido_id) inner join produto pr on pr.id = pi.produto_id) inner join categoria ca  on ca.id = pr.categoria_id
 	order by p.id
 	*/
 @Component
+@Transactional()
 public class SpringCommandLineRunner implements CommandLineRunner {
 
 	private ProdutoReposiroty produtoReposiroty;
@@ -398,5 +401,24 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 		this.pedidoRepository.save(pedido30);
 		BigDecimal valorTotalPedido = this.pedidoRepository.valorTotalPedido();
 		System.out.println(valorTotalPedido);
+
+		List<Object[]> vendas = this.pedidoRepository.relatorioDeVendas();
+
+		for (Object[] o : vendas) {
+			System.out.println(o[0]);
+			System.out.println(o[1]);
+			System.out.println(o[2]);
+
+		}
+		List<RelatorioDeVendasVo> relatorioDeVendasVo = this.pedidoRepository.relatorioDeVendasVo();
+		for (RelatorioDeVendasVo v : relatorioDeVendasVo) {
+			System.out.println(v);
+		}
+		Pedido pedido = this.pedidoRepository.findById(1l).get();
+		System.out.println(pedido);
+
+		Produto produto = this.produtoReposiroty.findById(1l).get();
+		System.out.println(produto);
+
 	}
 }
