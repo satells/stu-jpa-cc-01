@@ -76,9 +76,8 @@ public class Pedido {
 		this.valorTotal = valorTotal;
 	}
 
-	@Override
-	public String toString() {
-		return "Pedido [id=" + id + ", data=" + data + ", valorTotal=" + valorTotal + ", cliente=" + cliente;
+	public List<PedidoItem> getItens() {
+		return itens;
 	}
 
 }

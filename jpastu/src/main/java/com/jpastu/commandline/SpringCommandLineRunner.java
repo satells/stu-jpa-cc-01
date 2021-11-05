@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.jpastu.model.CategoriaFlexivel;
 import com.jpastu.model.Cliente;
@@ -23,7 +22,6 @@ import com.jpastu.vo.RelatorioDeVendasVo;
 	order by p.id
 	*/
 @Component
-@Transactional()
 public class SpringCommandLineRunner implements CommandLineRunner {
 
 	private ProdutoReposiroty produtoReposiroty;
@@ -59,6 +57,7 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		cadastrarPedido();
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		testaroutros();
 
 	}
 
@@ -399,6 +398,10 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 		this.pedidoRepository.save(pedido28);
 		this.pedidoRepository.save(pedido29);
 		this.pedidoRepository.save(pedido30);
+
+	}
+
+	private void testaroutros() {
 		BigDecimal valorTotalPedido = this.pedidoRepository.valorTotalPedido();
 		System.out.println(valorTotalPedido);
 
@@ -415,10 +418,59 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 			System.out.println(v);
 		}
 		Pedido pedido = this.pedidoRepository.findById(1l).get();
-		System.out.println(pedido);
+		System.out.println(pedido.getId());
+		System.out.println(pedido.getData());
+		System.out.println(pedido.getValorTotal());
 
-		Produto produto = this.produtoReposiroty.findById(1l).get();
-		System.out.println(produto);
+		Pedido buscarPedidoComCliente = this.pedidoRepository.buscarPedidoComCliente(1l);
+
+		System.out.println(buscarPedidoComCliente.getCliente().getNome());
+		System.out.println(buscarPedidoComCliente.getCliente().getCpf());
+		System.out.println(buscarPedidoComCliente.getCliente().getId());
+
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		Pedido buscarPedidoComClienteComItens = this.pedidoRepository.buscarPedidoComClienteComItens(1581l);
+
+		System.out.println(buscarPedidoComClienteComItens.getCliente().getId() + "<|>" + buscarPedidoComClienteComItens.getCliente().getNome() + "<|>"
+				+ buscarPedidoComClienteComItens.getCliente().getCpf());
+
+		List<PedidoItem> itens = buscarPedidoComClienteComItens.getItens();
+
+		itens.forEach(i -> System.out.println(
+				i.getProduto().getNome() + "<|>" + i.getQuantidade() + "<|>" + i.getValor() + "<|>" + i.getProduto().getCategoria().getDescricao()));
+
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		List<Pedido> pedidos = this.pedidoRepository.buscarPedidoAllComClienteComItens();
+
+		for (Pedido p : pedidos) {
+			System.out.print(p.getId() + "<|>" + p.getCliente().getId() + "<|>" + p.getCliente().getNome() + "<|>" + p.getCliente().getCpf());
+
+			List<PedidoItem> itens2 = p.getItens();
+
+			for (PedidoItem i : itens2) {
+				System.out.print(i.getProduto().getNome() + "<|>" + i.getQuantidade() + "<|>" + i.getValor() + "<|>"
+						+ i.getProduto().getCategoria().getDescricao());
+			}
+
+			System.out.println();
+
+		}
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		List<Pedido> pedidos2 = this.pedidoRepository.buscarPedidoAllComClienteComItensOpcional(3l);
+
+		for (Pedido p : pedidos2) {
+			System.out.print(p.getId() + "<|>" + p.getCliente().getId() + "<|>" + p.getCliente().getNome() + "<|>" + p.getCliente().getCpf());
+
+			List<PedidoItem> itens2 = p.getItens();
+
+			for (PedidoItem i : itens2) {
+				System.out.print(i.getProduto().getNome() + "<|>" + i.getQuantidade() + "<|>" + i.getValor() + "<|>"
+						+ i.getProduto().getCategoria().getDescricao());
+			}
+
+			System.out.println();
+
+		}
 
 	}
 }

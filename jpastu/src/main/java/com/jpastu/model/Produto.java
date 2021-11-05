@@ -72,12 +72,6 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	@Override
-	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", preco=" + preco + ", dataCadastro=" + dataCadastro
-				+ ", categoria=" + categoria + "]";
-	}
-
 	public Produto(String nome, String descricao, BigDecimal preco, CategoriaFlexivel categoria) {
 		this.nome = nome;
 		this.descricao = descricao;
