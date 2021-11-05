@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.jpastu.model.CategoriaFlexivel;
 import com.jpastu.model.Cliente;
+import com.jpastu.model.DadosPessoais;
 import com.jpastu.model.Pedido;
 import com.jpastu.model.PedidoItem;
 import com.jpastu.model.Produto;
@@ -65,12 +66,20 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 		List<Cliente> clientes = this.clienteRepository.findAll();
 		clientes.forEach(c -> System.out.println(c));
 		if (clientes.size() == 0) {
-			this.clienteRepository.save(new Cliente("Miguel", "019.035.560-31"));
-			this.clienteRepository.save(new Cliente("Arthur", "422.488.180-25"));
-			this.clienteRepository.save(new Cliente("Heitor", "023.908.140-42"));
-			this.clienteRepository.save(new Cliente("Helena", "348.832.870-84"));
-			this.clienteRepository.save(new Cliente("Alice", "226.708.910-63"));
-			this.clienteRepository.save(new Cliente("Laura", "726.667.910-92"));
+
+			DadosPessoais dadosMiguel = new DadosPessoais("Miguel", "019.035.560-31");
+			DadosPessoais dadosArthur = new DadosPessoais("Arthur", "422.488.180-25");
+			DadosPessoais dadosHeitor = new DadosPessoais("Heitor", "023.908.140-42");
+			DadosPessoais dadosHelena = new DadosPessoais("Helena", "348.832.870-84");
+			DadosPessoais dadosAlice = new DadosPessoais("Alice", "226.708.910-63");
+			DadosPessoais dadosLaura = new DadosPessoais("Laura", "726.667.910-92");
+
+			this.clienteRepository.save(new Cliente(dadosMiguel));
+			this.clienteRepository.save(new Cliente(dadosArthur));
+			this.clienteRepository.save(new Cliente(dadosHeitor));
+			this.clienteRepository.save(new Cliente(dadosHelena));
+			this.clienteRepository.save(new Cliente(dadosAlice));
+			this.clienteRepository.save(new Cliente(dadosLaura));
 		}
 	}
 
@@ -424,15 +433,16 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 
 		Pedido buscarPedidoComCliente = this.pedidoRepository.buscarPedidoComCliente(1l);
 
-		System.out.println(buscarPedidoComCliente.getCliente().getNome());
-		System.out.println(buscarPedidoComCliente.getCliente().getCpf());
+		System.out.println(buscarPedidoComCliente.getCliente().getDadosPessoais().getNome());
+		System.out.println(buscarPedidoComCliente.getCliente().getDadosPessoais().getCpf());
 		System.out.println(buscarPedidoComCliente.getCliente().getId());
 
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		Pedido buscarPedidoComClienteComItens = this.pedidoRepository.buscarPedidoComClienteComItens(1581l);
 
-		System.out.println(buscarPedidoComClienteComItens.getCliente().getId() + "<|>" + buscarPedidoComClienteComItens.getCliente().getNome() + "<|>"
-				+ buscarPedidoComClienteComItens.getCliente().getCpf());
+		System.out.println(
+				buscarPedidoComClienteComItens.getCliente().getId() + "<|>" + buscarPedidoComClienteComItens.getCliente().getDadosPessoais().getNome()
+						+ "<|>" + buscarPedidoComClienteComItens.getCliente().getDadosPessoais().getCpf());
 
 		List<PedidoItem> itens = buscarPedidoComClienteComItens.getItens();
 
@@ -443,7 +453,8 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 		List<Pedido> pedidos = this.pedidoRepository.buscarPedidoAllComClienteComItens();
 
 		for (Pedido p : pedidos) {
-			System.out.print(p.getId() + "<|>" + p.getCliente().getId() + "<|>" + p.getCliente().getNome() + "<|>" + p.getCliente().getCpf());
+			System.out.print(p.getId() + "<|>" + p.getCliente().getId() + "<|>" + p.getCliente().getDadosPessoais().getNome() + "<|>"
+					+ p.getCliente().getDadosPessoais().getCpf());
 
 			List<PedidoItem> itens2 = p.getItens();
 
@@ -456,10 +467,11 @@ public class SpringCommandLineRunner implements CommandLineRunner {
 
 		}
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		List<Pedido> pedidos2 = this.pedidoRepository.buscarPedidoAllComClienteComItensOpcional(3l);
+		List<Pedido> pedidos2 = this.pedidoRepository.buscarPedidoAllComClienteComItensOpcional(4l);
 
 		for (Pedido p : pedidos2) {
-			System.out.print(p.getId() + "<|>" + p.getCliente().getId() + "<|>" + p.getCliente().getNome() + "<|>" + p.getCliente().getCpf());
+			System.out.print(p.getId() + "<|>" + p.getCliente().getId() + "<|>" + p.getCliente().getDadosPessoais().getNome() + "<|>"
+					+ p.getCliente().getDadosPessoais().getCpf());
 
 			List<PedidoItem> itens2 = p.getItens();
 
